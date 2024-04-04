@@ -1,0 +1,68 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+    public static List<Integer> findMaximumSumPath(int[] X, int[] Y) {
+        int m = X.length;
+        int n = Y.length;
+        int i = 0, j = 0;
+        int sumX = 0, sumY = 0;
+        int maxSum = 0;
+        List<Integer> result = new ArrayList<>();
+
+        while (i < m && j < n) {
+            if (X[i] < Y[j]) {
+                sumX += X[i++];
+            } else if (X[i] > Y[j]) {
+                sumY += Y[j++];
+            } else { 
+                maxSum += Math.max(sumX, sumY) + X[i];
+                result.add(X[i]);
+                i++;
+                j++;
+                sumX = 0;
+                sumY = 0;
+            }
+        }
+        while (i < m) {
+            sumX += X[i++];
+        }
+
+        while (j < n) {
+            sumY += Y[j++];
+        }
+
+        maxSum += Math.max(sumX, sumY);
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the size of array X: ");
+        int m = scanner.nextInt();
+        int[] X = new int[m];
+        System.out.println("Enter the elements of array X (sorted):");
+        for (int i = 0; i < m; i++) {
+            X[i] = scanner.nextInt();
+        }
+        System.out.print("Enter the size of array Y: ");
+        int n = scanner.nextInt();
+        int[] Y = new int[n];
+        System.out.println("Enter the elements of array Y (sorted):");
+        for (int i = 0; i < n; i++) {
+            Y[i] = scanner.nextInt();
+        }
+
+        List<Integer> maxSumPath = findMaximumSumPath(X, Y);
+        System.out.println("The maximum sum path is:");
+        for (int num : maxSumPath) {
+            System.out.print(num + " ");
+        }
+        int maxSum = maxSumPath.stream().mapToInt(Integer::intValue).sum();
+        System.out.println("\nThe maximum sum is: " + maxSum);
+
+        scanner.close();
+    }
+}
