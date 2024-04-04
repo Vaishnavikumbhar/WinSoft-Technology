@@ -1,0 +1,16 @@
+import java.util.HashMap;
+
+public class Main {
+    public static void main(String[] args) {
+        String input = "I am vaishnavi kumbhar";
+        HashMap<String, Integer> wordCount = new HashMap<>();
+
+        // Count words and update the word count map
+        for (String word : input.replaceAll("[^a-zA-Z0-9\\s]", "").toLowerCase().split("\\s+")) {
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+        }
+
+        // Print the word count for each word
+        wordCount.forEach((word, count) -> System.out.println(word + ": " + count));
+    }
+}
